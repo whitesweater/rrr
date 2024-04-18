@@ -48,3 +48,12 @@ Thumbs.db
 *.mov
 *.wmv
 
+!/res/
+!/merge/
+
+!/dataset_usgs_tif/
+
+!/dataset_usgs_tif.zip
+
+!/merged_sketch.zip
+!/train_dataset.csv

@@ -53,6 +53,10 @@ from diffusers.utils.hub_utils import load_or_create_model_card, populate_model_
 from diffusers.utils.import_utils import is_xformers_available
 from diffusers.utils.torch_utils import is_compiled_module
 
+import os
+
+os.environ["http_proxy"] = "http://127.0.0.1:12637"
+os.environ["https_proxy"] = "http://127.0.0.1:12637"
 if is_wandb_available():
     import wandb
 
@@ -462,7 +466,7 @@ def parse_args(input_args=None):
     parser.add_argument(
         "--train_data_dir",
         type=str,
-        default=None,
+        default="TerrainDataset.py",
         help=(
             "A folder containing the training data. Folder contents must follow the structure described in"
             " https://huggingface.co/docs/datasets/image_dataset#imagefolder. In particular, a `metadata.jsonl` file"

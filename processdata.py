@@ -46,8 +46,8 @@ for folder in folders:
         if main_image in main_images:
             all_image_path = os.path.join(folder, all_image)
             main_image_path = os.path.join(folder, main_image)
-            process_and_resize_image(all_image_path)
-            process_and_resize_image(main_image_path)
+            # process_and_resize_image(all_image_path)
+            # process_and_resize_image(main_image_path)
             # 在添加到列表之前去除 base_path
             relative_all_image_path = all_image_path.replace(base_path, '').lstrip('/')
             relative_main_image_path = main_image_path.replace(base_path, '').lstrip('/')

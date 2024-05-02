@@ -87,7 +87,7 @@ if __name__ == '__main__':
     dataset = TerrainDataset()
 
     # 确保数据已下载和准备好
-    dataset.download_and_prepare()
+    # dataset.download_and_prepare()
     #
     # # 使用数据
     # data = dataset.as_dataset(split='train')  # 确保指定数据集分割

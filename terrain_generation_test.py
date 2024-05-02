@@ -1,11 +1,20 @@
+import os
 from diffusers import StableDiffusionControlNetPipeline, ControlNetModel, UniPCMultistepScheduler
 from diffusers.utils import load_image
 import torch
+# print(torch.cuda.is_available())
+# print(torch.__version__)
+# exit(-1)
+
+
+os.environ["http_proxy"] = "http://127.0.0.1:12637"
+os.environ["https_proxy"] = "http://127.0.0.1:12637"
 
 base_model_path = "runwayml/stable-diffusion-v1-5"
-controlnet_path = "downloaded weights path"
+controlnet_path = "checkpoint-500/controlnet"
 
 controlnet = ControlNetModel.from_pretrained(controlnet_path, torch_dtype=torch.float16)
+
 pipe = StableDiffusionControlNetPipeline.from_pretrained(
     base_model_path, controlnet=controlnet, torch_dtype=torch.float16
 )
@@ -22,7 +31,7 @@ pipe.enable_xformers_memory_efficient_attention()
 # memory optimization.
 pipe.enable_model_cpu_offload()
 
-control_image = load_image("your sketch path")
+control_image = load_image("merge")
 prompt = "terrain map, grayscale"
 
 # generate image

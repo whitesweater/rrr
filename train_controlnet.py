@@ -243,7 +243,7 @@ def parse_args(input_args=None):
     parser.add_argument(
         "--pretrained_model_name_or_path",
         type=str,
-        default=None,
+        default="runwayml/stable-diffusion-v1-5",
         required=True,
         help="Path to pretrained model or model identifier from huggingface.co/models.",
     )
@@ -276,7 +276,7 @@ def parse_args(input_args=None):
     parser.add_argument(
         "--output_dir",
         type=str,
-        default="controlnet-model",
+        default="./output/",
         help="The output directory where the model predictions and checkpoints will be written.",
     )
     parser.add_argument(
@@ -289,7 +289,7 @@ def parse_args(input_args=None):
     parser.add_argument(
         "--resolution",
         type=int,
-        default=512,
+        default=128,
         help=(
             "The resolution for input images, all the images in the train/validation dataset will be resized to this"
             " resolution"
@@ -346,7 +346,8 @@ def parse_args(input_args=None):
     parser.add_argument(
         "--learning_rate",
         type=float,
-        default=5e-6,
+        # default=5e-6,
+        default=0.0001,
         help="Initial learning rate (after the potential warmup period) to use.",
     )
     parser.add_argument(
@@ -474,12 +475,15 @@ def parse_args(input_args=None):
         ),
     )
     parser.add_argument(
-        "--image_column", type=str, default="image", help="The column of the dataset containing the target image."
+        "--image_column",
+        type=str,
+        default="image",
+        help="The column of the dataset containing the target image."
     )
     parser.add_argument(
         "--conditioning_image_column",
         type=str,
-        default="conditioning_image",
+        default="sketch",
         help="The column of the dataset containing the controlnet conditioning image.",
     )
     parser.add_argument(

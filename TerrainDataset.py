@@ -3,6 +3,7 @@ import json
 import os
 import datasets
 import pandas as pd
+from datasets import load_dataset
 
 _DESCRIPTION = """\
 Dataset for sketch2terrain generation task.
@@ -39,9 +40,9 @@ class TerrainDataset(datasets.GeneratorBasedBuilder):
         )
 
     def _split_generators(self, dl_manager):
-        images_dir = 'res'
-        metadata_path = 'train_dataset.csv'
-        conditioning_images_dir = 'res'
+        metadata_path = r'E:\code\tencent\road_gen\train_dataset.csv'
+        images_dir = r'E:\code\tencent\road_gen\res'
+        conditioning_images_dir = r'E:\code\tencent\road_gen\res'
 
         return [
             datasets.SplitGenerator(
@@ -57,16 +58,18 @@ class TerrainDataset(datasets.GeneratorBasedBuilder):
 
     # method parameters are unpacked from `gen_kwargs` as given in `_split_generators`
     def _generate_examples(self, metadata_path, images_dir, conditioning_images_dir):
-        metadata = pd.read_json(metadata_path, lines=True)
+        metadata = pd.read_csv(metadata_path)
         print('training data length:', len(metadata))
-
+        # print(images_dir, conditioning_images_dir)
         for _, row in metadata.iterrows():
             text = row["text"]
-
-            image_path = os.path.join(images_dir, row["image"])
+            # image_path = os.path.join(r'E:\code\tencent\road_gen\res', row["image"])
+            image_path = r'E:\code\tencent\road_gen\res'+ row["image"]
+            # print(images_dir, conditioning_images_dir,"-----",  image_path,"---file:", row["image"])
             image = open(image_path, "rb").read()
 
-            conditioning_image_path = os.path.join(conditioning_images_dir, row["sketch"])
+            # conditioning_image_path = os.path.join(r'E:\code\tencent\road_gen\res', row["sketch"])
+            conditioning_image_path = r'E:\code\tencent\road_gen\res'+ row["sketch"]
             conditioning_image = open(conditioning_image_path, "rb").read()
 
             yield row["image"], {
@@ -80,15 +83,18 @@ class TerrainDataset(datasets.GeneratorBasedBuilder):
                     "bytes": conditioning_image,
                 },
             }
-
-
 if __name__ == '__main__':
     # 创建数据集实例
-    dataset = TerrainDataset()
-
-    # 确保数据已下载和准备好
-    # dataset.download_and_prepare()
-    #
-    # # 使用数据
+    # dataset = load_dataset()
+    dataset = load_dataset(
+        'TerrainDataset.py',
+        cache_dir=None,
+        split='train'
+    )
+    # print(dataset[0])
+    # # 确保数据已下载和准备好
+    # # dataset.download_and_prepare()
+    # #
+    # # # 使用数据
     # data = dataset.as_dataset(split='train')  # 确保指定数据集分割
     # print(data)
